@@ -11,7 +11,7 @@ public class GasPriceProblemTest {
     @ParameterizedTest
     @MethodSource("getParams")
     public void test(int buyDay, int sellDay, int[] prices) {
-        GasPriceProblem.BuyAndSellDays buyAndSellDays = GasPriceProblem.getBuyAndSellDays(prices);
+        GasPriceProblem.BuyAndSellDays buyAndSellDays = GasPriceProblem.getBuyAndSellDays(prices, 1000);
         assertEquals(buyDay, buyAndSellDays.buyDay(), "buy day");
         assertEquals(sellDay, buyAndSellDays.sellDay(), "sell day");
     }
@@ -21,7 +21,8 @@ public class GasPriceProblemTest {
                 Arguments.of(1, 3, new int[] {10, 20, 30, 20}),
                 Arguments.of(0, 0, new int[] {30, 20, 10}),
                 Arguments.of(1, 4, new int[] {20, 40, 30, 50, 10}),
-                Arguments.of(3, 4, new int[] {30, 50, 10, 40})
+                Arguments.of(3, 4, new int[] {30, 50, 10, 40}),
+                Arguments.of(3, 4, new int[] {501, 1000, 1, 500})
         );
     }
 

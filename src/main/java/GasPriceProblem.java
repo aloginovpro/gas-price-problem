@@ -1,6 +1,6 @@
 public class GasPriceProblem {
 
-    public static BuyAndSellDays getBuyAndSellDays(int[] prices) {
+    public static BuyAndSellDays getBuyAndSellDays(int[] prices, int moneyValue) {
         int globalMinIndex = 0;
         int maxDeltaBuyIndex = 0;
         int maxDeltaSellIndex = 0;
@@ -10,7 +10,8 @@ public class GasPriceProblem {
                 globalMinIndex = i;
             }
 
-            if (prices[i] - prices[globalMinIndex] > prices[maxDeltaSellIndex] - prices[maxDeltaBuyIndex]) {
+            if (getMoneyDelta(prices, moneyValue, globalMinIndex, i)
+                    > getMoneyDelta(prices, moneyValue, maxDeltaBuyIndex, maxDeltaSellIndex)) {
                 maxDeltaBuyIndex = globalMinIndex;
                 maxDeltaSellIndex = i;
             }
@@ -21,6 +22,12 @@ public class GasPriceProblem {
         } else {
             return new BuyAndSellDays(maxDeltaBuyIndex + 1, maxDeltaSellIndex + 1);
         }
+    }
+
+    private static int getMoneyDelta(int[] prices, int moneyValue, int buyIndex, int sellIndex) {
+        int volume = moneyValue / prices[buyIndex];
+        int priceDelta = prices[sellIndex] - prices[buyIndex];
+        return volume * priceDelta;
     }
 
     public record BuyAndSellDays(int buyDay, int sellDay) {}
